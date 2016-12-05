@@ -26,7 +26,6 @@ void findBrightest(int* outx, int* outy, uint32_t* image, uint32_t color){
 		for(int column = 0; column < x; column++){
 			test = (image[findIdx(column, row)]);
 			if(getPower(test, color) > highestPower){
-				printf("found highest. R%d G%d B%d\n", getRed(test), getGreen(test), getBlue(test));
 				highestPower = getPower(test, color);
 				*outx = column;
 				*outy = row;
