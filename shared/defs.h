@@ -4,10 +4,7 @@
 #define CAMERA_COUNT 1
 #define CAMX {0, 0}
 #define CAMY {0, 0}
-#define CAMZ {0, 0}
-#define CAMVECX {0.0, 0.0}
-#define CAMVECY {0.0, 0.0}
-#define CAMVECZ {0.0, 0.0}
+//camera vectors dont exist anymore. way easier to just say "all cameras must point at the origin."
 /*
 |---------20cm---------|
 |---10cm---|

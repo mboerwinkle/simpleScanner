@@ -13,6 +13,7 @@ int main(){
 	
 	for(int frame = 0; processFrame(frame); frame++){
 	}
+	printf("E\n");//Is for End! Yay!
 	return 0;
 }
 
