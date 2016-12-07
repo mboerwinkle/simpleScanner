@@ -5,9 +5,6 @@
 using namespace cv;
 int main(){
 	Camera cams[CAMERA_COUNT];
-//	for(int temp = 0; temp <  CAMERA_COUNT; temp++){
-//		cams[temp] = new Camera();
-//	}
 	int idx = 0;
 	char name[80];
 	while(true){

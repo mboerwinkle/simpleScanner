@@ -12,12 +12,13 @@ int getGreen(uint32_t sample);
 int getBlue(uint32_t sample);
 void writeImage();
 
+FILE *(out[CAMERA_COUNT]);
 uint32_t* finalImage = NULL;
 int x, y;
-void findAndPrintLight(uint32_t* image, uint32_t color){
+void findAndPrintLight(int cam, uint32_t* image, uint32_t color){
 	int outx = 0, outy = 0;
 	findBrightest(&outx, &outy, image, color);
-	printf("%d,%d,\n", outx, outy);
+	fprintf(out[cam], "%lf,%lf,\n", (double)outx*2/x-1, (double)outy*2/y-1);
 }
 void findBrightest(int* outx, int* outy, uint32_t* image, uint32_t color){
 	int64_t highestPower = INT64_MIN;
@@ -36,6 +37,8 @@ void findBrightest(int* outx, int* outy, uint32_t* image, uint32_t color){
 		finalImage = (uint32_t*)calloc(x*y, sizeof(uint32_t));
 		memcpy(finalImage, image, x*y*sizeof(uint32_t));
 	}
+	test = (image[findIdx(*outx, *outy)]);
+	printf("R%d G%d B%d P%d\n", getRed(test), getGreen(test), getBlue(test), getPower(test, color));
 	finalImage[findIdx(*outx, *outy)] = 0xFFFFFFFF^color;
 	finalImage[findIdx((*outx+1)%x, *outy)] = 0xFFFFFFFF^color;
 	finalImage[findIdx((*outx-1+x)%x, *outy)] = 0xFFFFFFFF^color;

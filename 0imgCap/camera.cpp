@@ -2,10 +2,13 @@
 #include <stdlib.h>
 #include "camera.h"
 
+int cameraCount = 0;
+
 Camera::Camera(){
-	cam.open(0);
+	cam.open(cameraCount);
+	cameraCount++;
 	if(!cam.isOpened()){
-		puts("failed to open camera");
+		printf("Failed to open camera %d\n", cameraCount-1);
 	}
 }
 void Camera::processFrame(){

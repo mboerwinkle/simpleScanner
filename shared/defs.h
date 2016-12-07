@@ -1,9 +1,9 @@
 //unit is microns
 #ifndef DEFS_H
 #define DEFS_H
-#define CAMERA_COUNT 1
-#define CAMX {0, 0}
-#define CAMY {0, 0}
+#define CAMERA_COUNT 2
+extern int32_t CAMX[CAMERA_COUNT];
+extern int32_t CAMY[CAMERA_COUNT];
 //camera vectors dont exist anymore. way easier to just say "all cameras must point at the origin."
 /*
 |---------20cm---------|
