@@ -5,9 +5,12 @@
 using namespace cv;
 int main(){
 	Camera cams[CAMERA_COUNT];
+	startWindowThread();
+	namedWindow("testWindow", CV_WINDOW_AUTOSIZE);
 	int idx = 0;
 	char name[80];
 	while(true){
+		getchar();
 		for(int temp = 0; temp <  CAMERA_COUNT; temp++){
 			cams[temp].grabFrame();
 		}
@@ -17,7 +20,6 @@ int main(){
 			GaussianBlur(cams[temp].data, cams[temp].data, Size(41,41), 0, 0);
 			imwrite(name, cams[temp].data);
 		}
-		getchar();
 		idx++;
 	}
 }

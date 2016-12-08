@@ -43,6 +43,7 @@ bool processFrame(int frame){
 		free(image);
 		writeImage();
 		finalImage = NULL;
+		getchar();
 	}
 	return true;
 }
