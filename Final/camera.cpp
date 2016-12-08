@@ -16,6 +16,14 @@ Camera::Camera(int *idx){
 	width = data.size().width;
 	height = data.size().height;
 }
+void Camera::drawCross(int x, int y, int r, int g, int b){
+	for(int tempx = x-1; tempx <=x+1; tempx++){
+	for(int tempy = y-1; tempy <=y+1; tempy++){
+		drawData.at<cv::Vec3b>(tempy, tempx)[0] = b;
+		drawData.at<cv::Vec3b>(tempy, tempx)[1] = g;
+		drawData.at<cv::Vec3b>(tempy, tempx)[2] = r;
+	}}
+}
 int Camera::getRed(int x, int y){
 	return getComp(x, y, 'r');
 }
@@ -38,6 +46,7 @@ int Camera::getComp(int x, int y, char c){
 }
 void Camera::processFrame(){
 	cam.retrieve(data);
+	cam.retrieve(drawData);
 }
 void Camera::grabFrame(){
 	cam.grab();

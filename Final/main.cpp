@@ -25,7 +25,8 @@ int main(){
 		for(int temp = 0; temp <  CAMERA_COUNT; temp++){
 			cams[temp].processFrame();
 			GaussianBlur(cams[temp].data, cams[temp].data, Size(41,41), 0, 0);
-			imshow(cams[temp].winName, cams[temp].data);
+			cams[temp].drawCross(cams[temp].width*0.5, cams[temp].height*0.5, 255, 255, 255);
+			imshow(cams[temp].winName, cams[temp].drawData);
 			printf("R%d G%d B%d\n", cams[temp].getRed(cams[temp].width*0.5, cams[temp].height*0.5), cams[temp].getGreen(cams[temp].width*0.5, cams[temp].height*0.5), cams[temp].getBlue(cams[temp].width*0.5, cams[temp].height*0.5));
 		}
 	}

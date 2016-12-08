@@ -12,7 +12,9 @@ public:
 	//Quickly grabs the next frame...
 	void grabFrame();
 	Mat data;
+	Mat drawData;
 	int width, height;
+	void drawCross(int x, int y, int r, int g, int b);
 	int getRed(int x, int y);
 	int getBlue(int x, int y);
 	int getGreen(int x, int y);
