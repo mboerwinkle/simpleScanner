@@ -4,7 +4,8 @@
 #include "delay.h"
 #include "defs.h"
 using namespace cv;
-#define FRAMERATE 5
+#define FRAMERATE 30
+void drawReticule(Camera& targ);
 int main(){
 	startWindowThread();
 	int cam_idx = 0;
@@ -25,9 +26,19 @@ int main(){
 		for(int temp = 0; temp <  CAMERA_COUNT; temp++){
 			cams[temp].processFrame();
 			GaussianBlur(cams[temp].data, cams[temp].data, Size(41,41), 0, 0);
-			cams[temp].drawCross(cams[temp].width*0.5, cams[temp].height*0.5, 255, 255, 255);
+			drawReticule(cams[temp]);
+			for(int light_idx = 0; light_idx < LIGHT_COUNT; light_idx++){
+				cams[temp].findAndDrawLight(light_idx);
+			}
 			imshow(cams[temp].winName, cams[temp].drawData);
 			printf("R%d G%d B%d\n", cams[temp].getRed(cams[temp].width*0.5, cams[temp].height*0.5), cams[temp].getGreen(cams[temp].width*0.5, cams[temp].height*0.5), cams[temp].getBlue(cams[temp].width*0.5, cams[temp].height*0.5));
 		}
 	}
+}
+void drawReticule(Camera& targ){
+	targ.drawCross(targ.width*0.5, targ.height*0.5, 255, 255, 255);
+	targ.drawCross(targ.width*0.25, targ.height*0.5, 255, 255, 255);
+	targ.drawCross(targ.width*0.75, targ.height*0.5, 255, 255, 255);
+	targ.drawCross(targ.width*0.5, targ.height*0.25, 255, 255, 255);
+	targ.drawCross(targ.width*0.5, targ.height*0.75, 255, 255, 255);
 }
