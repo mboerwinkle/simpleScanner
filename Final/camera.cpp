@@ -56,8 +56,8 @@ void Camera::findAndDrawLight(int light_idx){
 				highestPower = power;
 				lightPosInt[light_idx][0] = x;
 				lightPosInt[light_idx][1] = y;
-				lightPos[light_idx][0] = x/width+0.5;
-				lightPos[light_idx][1] = y/height+0.5;
+				lightPos[light_idx][0] = (double)x/width-0.5;
+				lightPos[light_idx][1] = (double)y/height-0.5;
 			}
 		}
 	}

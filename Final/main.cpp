@@ -5,12 +5,17 @@
 #include "defs.h"
 using namespace cv;
 #define FRAMERATE 30
+
+extern void calculateLights();
+
 void drawReticule(Camera& targ);
+
+int cam_init_idx = 0;
+Camera cams[CAMERA_COUNT](&cam_init_idx);
+
 int main(){
 	startWindowThread();
-	int cam_idx = 0;
 	int periodic = 0;
-	Camera cams[CAMERA_COUNT](&cam_idx);
 	while(true){
 		delay(FRAMERATE);
 		periodic++;
@@ -31,8 +36,9 @@ int main(){
 				cams[temp].findAndDrawLight(light_idx);
 			}
 			imshow(cams[temp].winName, cams[temp].drawData);
-			printf("R%d G%d B%d\n", cams[temp].getRed(cams[temp].width*0.5, cams[temp].height*0.5), cams[temp].getGreen(cams[temp].width*0.5, cams[temp].height*0.5), cams[temp].getBlue(cams[temp].width*0.5, cams[temp].height*0.5));
+//			printf("R%d G%d B%d\n", cams[temp].getRed(cams[temp].width*0.5, cams[temp].height*0.5), cams[temp].getGreen(cams[temp].width*0.5, cams[temp].height*0.5), cams[temp].getBlue(cams[temp].width*0.5, cams[temp].height*0.5));
 		}
+		calculateLights();
 	}
 }
 void drawReticule(Camera& targ){
