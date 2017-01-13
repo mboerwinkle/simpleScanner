@@ -24,6 +24,7 @@ public:
 	int getComp(int x, int y, char c);
 	void findAndDrawLight(int light_idx);
 	int getPower(int x, int y, char c);
+	int getBrightness(int x, int y);
 private:
 	cv::VideoCapture cam;
 };

@@ -48,19 +48,33 @@ int Camera::getComp(int x, int y, char c){
 void Camera::findAndDrawLight(int light_idx){
 	char c = LIGHT_COLOR[light_idx];
 	int32_t highestPower = INT32_MIN;
-	int32_t power;	
-	for(int x = 0; x < width; x++){
-		for(int y = 0; y < height; y++){
+	int32_t power;
+	int step = 3;
+	int bestx = 0, besty = 0;
+	for(int x = 0; x < width; x+=step){
+		for(int y = 0; y < height; y+=step){
 			power = getPower(x, y, c);
 			if(power > highestPower){
+				bestx = x;
+				besty = y;
 				highestPower = power;
-				lightPosInt[light_idx][0] = x;
-				lightPosInt[light_idx][1] = y;
-				lightPos[light_idx][0] = (double)x/width-0.5;
-				lightPos[light_idx][1] = (double)y/height-0.5;
 			}
 		}
 	}
+	for(int x = bestx-step; x < bestx+step; x++){
+		for(int y = besty-step; y < besty+step; y++){
+			power = getPower(x, y, c);
+			if(power > highestPower){
+				bestx = x;
+				besty = y;
+				highestPower = power;
+			}
+		}
+	}
+	lightPosInt[light_idx][0] = bestx;
+	lightPosInt[light_idx][1] = besty;
+	lightPos[light_idx][0] = (double)bestx/width-0.5;
+	lightPos[light_idx][1] = (double)besty/height-0.5;
 	if(c == 'r'){
 		drawCross(lightPosInt[light_idx][0], lightPosInt[light_idx][1], 0, 255, 255);
 	}else if(c == 'g'){
@@ -71,16 +85,24 @@ void Camera::findAndDrawLight(int light_idx){
 }
 
 int Camera::getPower(int x, int y, char c){
+	int red = getRed(x, y);
+	int blue = getBlue(x, y);
+	int green = getGreen(x, y);
+	int brightness = (red+blue+green)/3;//equivalent to getBrightness()
         if(c == 'r'){
-                return getRed(x, y)-0.5*(getGreen(x, y)+getBlue(x, y));
+                return (red-(0.5*(green+blue)))*brightness;
         }else if(c == 'b'){
-                return getBlue(x, y)-0.5*(getGreen(x, y)+getRed(x, y));
+                return (blue-(0.5*(green+red)))*brightness;
         }else if(c == 'g'){
-                return getGreen(x, y)-0.5*(getRed(x, y)+getBlue(x, y));
+                return (green-(0.5*(red+blue)))*brightness;
         }else{
                 puts("getPower Error");
                 return -1;
         }
+}
+
+int Camera::getBrightness(int x, int y){
+	return (getRed(x, y)+getBlue(x, y)+getGreen(x, y))/3;
 }
 
 void Camera::processFrame(){
